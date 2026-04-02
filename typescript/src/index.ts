@@ -117,7 +117,8 @@ export function componerNombre(
  *          El array original NO debe cambiar.
  */
 export function agregarElemento<T>(arr: readonly T[], elemento: T): T[] {
-  throw new Error("No implementado");
+  const arr2 = [...arr, elemento];
+  return arr2;
 }
 
 /**
@@ -129,7 +130,8 @@ export function agregarElemento<T>(arr: readonly T[], elemento: T): T[] {
  *          eliminarPorIndice([10,20,30], 99)   → [10,20,30]
  */
 export function eliminarPorIndice<T>(arr: readonly T[], indice: number): T[] {
-  throw new Error("No implementado");
+  const arr2 = arr.filter((_, i) => i !== indice);
+  return arr2;
 }
 
 /**
@@ -145,7 +147,8 @@ export function actualizarPrecio(
   producto: { nombre: string; precio: number; [key: string]: unknown },
   nuevoPrecio: number
 ): { nombre: string; precio: number; [key: string]: unknown } {
-  throw new Error("No implementado");
+  const prod = { ...producto, precio: nuevoPrecio };
+  return prod;
 }
 
 /**
@@ -157,7 +160,8 @@ export function actualizarPrecio(
  *          El array original NO debe cambiar.
  */
 export function ordenarSinMutar(nums: readonly number[]): number[] {
-  throw new Error("No implementado");
+  const arr2 = nums.slice().sort((a, b) => a - b);
+  return arr2;
 }
 
 /**
@@ -174,7 +178,8 @@ export function aplicarDescuentoRegistros(
   productos: readonly { nombre: string; precio: number }[],
   porcentaje: number
 ): { nombre: string; precio: number }[] {
-  throw new Error("No implementado");
+  const prod = productos.map(p => ({ ...p, precio: Math.round(p.precio * (1 - porcentaje / 100) * 100) / 100 }));
+  return prod;
 }
 
 // ─── GRUPO 3: map / filter / reduce ───────────────────────────────────────
