@@ -387,7 +387,10 @@ export function partial<A, B, C>(fn: (a: A, b: B) => C, a: A): (b: B) => C {
 export function procesarVentas(
   ventas: { monto: number; tipo: string }[]
 ): { total: number; count: number; promedio: number } {
-  throw new Error("No implementado");
+  const filtro = (ventas.filter(n => n.monto > 100));
+  const total = filtro.reduce((acc, t) => acc + t.monto, 0);
+  const cant = filtro.length;
+  return {total: total, count: cant, promedio: cant > 0 ? total/cant : 0};
 }
 
 /**
@@ -410,7 +413,15 @@ export function estadisticasArray(nums: number[]): {
   promedio: number;
   mediana: number;
 } {
-  throw new Error("No implementado");
+  if (nums.length === 0) return { min: 0, max: 0, sum: 0, promedio: 0, mediana: 0 };
+  const ordenado = nums.slice().sort((a,b) => a - b);
+  const min = ordenado[0];
+  const max = ordenado[ordenado.length - 1];
+  const sum = ordenado.reduce((acc, n) => acc + n, 0);
+  const promedio = sum / ordenado.length;
+  const mid = Math.floor(ordenado.length / 2);
+  const mediana = ordenado.length % 2 === 0 ? (ordenado[mid - 1] + ordenado[mid]) / 2 : ordenado[mid];
+  return {min, max, sum, promedio, mediana};
 }
 
 /**
@@ -441,5 +452,7 @@ export function estadisticasArray(nums: number[]): {
 export function transformarDatos(
   registros: { nombre: string; ventas: number[]; activo: boolean }[]
 ): { nombre: string; promedio: number }[] {
-  throw new Error("No implementado");
+  const activos = registros.filter(r => r.activo === true);
+  const promedios = activos.map(r => ({ nombre: r.nombre, promedio: r.ventas.length > 0 ? Math.round((r.ventas.reduce((acc, v) => acc + v, 0) / r.ventas.length) * 100) / 100 : 0 }));
+  return promedios.sort((a, b) => b.promedio - a.promedio);
 }
