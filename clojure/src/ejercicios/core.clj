@@ -22,7 +22,7 @@
    (contar-pares [1 3 5])       => 0
    (contar-pares [])            => 0"
   [coll]
-  (throw (ex-info "No implementado" {:fn "contar-pares"})))
+  (count (filter even? coll)))
 
 (defn suma-lista
   "CLJ-02: Suma todos los elementos de coll usando reduce.
@@ -32,7 +32,7 @@
    (suma-lista [1 2 3 4 5]) => 15
    (suma-lista [])          => 0"
   [coll]
-  (throw (ex-info "No implementado" {:fn "suma-lista"})))
+  (reduce + coll))
 
 (defn invertir-lista
   "CLJ-03: Invierte coll usando reduce.
@@ -42,7 +42,7 @@
    (invertir-lista [1 2 3]) => (3 2 1)
    (invertir-lista [])      => ()"
   [coll]
-  (throw (ex-info "No implementado" {:fn "invertir-lista"})))
+  (reduce conj '() coll))
 
 (defn maximo-lista
   "CLJ-04: Retorna el máximo de coll usando reduce.
@@ -52,7 +52,7 @@
    (maximo-lista [3 1 4 1 5 9 2 6]) => 9
    (maximo-lista [-5 -1 -3])        => -1"
   [coll]
-  (throw (ex-info "No implementado" {:fn "maximo-lista"})))
+  (reduce (fn [acc x] (if (> x acc) x acc)) (first coll) coll))
 
 (defn rango-lista
   "CLJ-05: Retorna {:min <min> :max <max> :rango <max-min>}.
@@ -61,7 +61,13 @@
 
    (rango-lista [3 1 4 1 5 9]) => {:min 1 :max 9 :rango 8}"
   [coll]
-  (throw (ex-info "No implementado" {:fn "rango-lista"})))
+  (let [primer-elemento (first coll)
+   stats (reduce (fn [acc x]
+      {:min (min (:min acc) x)
+      :max (max (:max acc) x)})
+  {:min primer-elemento :max primer-elemento} coll)]
+  (assoc stats :rango (- (:max stats) (:min stats))))
+)
 
 ;; ─── GRUPO 2: map / filter / reduce ─────────────────────────────
 
